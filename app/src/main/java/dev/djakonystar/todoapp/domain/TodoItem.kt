@@ -1,7 +1,12 @@
 package dev.djakonystar.todoapp.domain
 
 data class TodoItem(
-    val id: Int,
     val name: String,
-    val enabled: Boolean
-)
+    val enabled: Boolean,
+    var id: Int = UNDEFINED_ID
+) {
+
+    companion object {
+        const val UNDEFINED_ID = -1
+    }
+}
