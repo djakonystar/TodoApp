@@ -1,7 +1,7 @@
 package dev.djakonystar.todoapp.domain
 
-class GetTodoListUseCase {
+class GetTodoListUseCase(private val todoListRepository: TodoListRepository) {
     fun getTodoList(): List<TodoItem> {
-        TODO()
+        return todoListRepository.getTodoList()
     }
 }
