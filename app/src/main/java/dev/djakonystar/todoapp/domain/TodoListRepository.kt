@@ -1,8 +1,10 @@
 package dev.djakonystar.todoapp.domain
 
+import androidx.lifecycle.LiveData
+
 interface TodoListRepository {
 
-    fun getTodoList(): List<TodoItem>
+    fun getTodoList(): LiveData<List<TodoItem>>
 
     fun getTodoItem(id: Int): TodoItem
 

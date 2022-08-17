@@ -1,16 +1,17 @@
 package dev.djakonystar.todoapp.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import dev.djakonystar.todoapp.domain.TodoItem
 import dev.djakonystar.todoapp.domain.TodoListRepository
 
 object TodoListRepositoryImpl: TodoListRepository {
 
+    private val todoListLiveData = MutableLiveData<List<TodoItem>>()
     private val todoList = mutableListOf<TodoItem>()
     private var autoIncrementId = 0
 
-    override fun getTodoList(): List<TodoItem> {
-        return todoList.toList()
-    }
+    override fun getTodoList(): LiveData<List<TodoItem>> = todoListLiveData
 
     override fun getTodoItem(id: Int): TodoItem {
         return todoList.find {
@@ -23,6 +24,7 @@ object TodoListRepositoryImpl: TodoListRepository {
             todoItem.id = autoIncrementId++
         }
         todoList.add(todoItem)
+        updateList()
     }
 
     override fun editTodoItem(todoItem: TodoItem) {
@@ -33,5 +35,10 @@ object TodoListRepositoryImpl: TodoListRepository {
 
     override fun deleteTodoItem(todoItem: TodoItem) {
         todoList.remove(todoItem)
+        updateList()
+    }
+
+    private fun updateList() {
+        todoListLiveData.value = todoList.toList()
     }
 }
